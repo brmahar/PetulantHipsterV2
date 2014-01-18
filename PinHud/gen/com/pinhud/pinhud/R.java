@@ -40,11 +40,11 @@ public final class R {
         public static final int fragment_container=0x7f0b0000;
         public static final int imageView1=0x7f0b0007;
         public static final int login=0x7f0b0006;
-        public static final int newPin=0x7f0b0009;
+        public static final int newPin=0x7f0b000c;
         public static final int password=0x7f0b0005;
-        public static final int pinDescription=0x7f0b000c;
-        public static final int pinPicture=0x7f0b000a;
-        public static final int pinTitle=0x7f0b000b;
+        public static final int pinDescription=0x7f0b000b;
+        public static final int pinPicture=0x7f0b0009;
+        public static final int pinTitle=0x7f0b000a;
         public static final int progress=0x7f0b0003;
         public static final int scrollView=0x7f0b0001;
         public static final int theLayout=0x7f0b0002;

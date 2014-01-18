@@ -256,7 +256,7 @@ public class MainActivity extends Activity {
 			// Creating HTTP client
 			HttpClient httpClient = new DefaultHttpClient();
 			// Creating HTTP Post
-			HttpPost httpPost = new HttpPost("http://25.201.144.145:5000");
+			HttpPost httpPost = new HttpPost("http://kensmc.no-ip.org:4999/api");
 			//auth.put("logonPassword", pass);
 
 			String message = request.toString();

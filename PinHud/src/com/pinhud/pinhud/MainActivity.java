@@ -193,9 +193,9 @@ public class MainActivity extends Activity {
 			FeedFragment fFrag = new FeedFragment();
 			fFrag.setArguments(getIntent().getExtras());
 			try {
-				request.put("Username", pUser);
-				request.put("Store", storeName);
-				request.put("Board", board);
+				request.put("name", pUser);
+				//request.put("Store", storeName);
+				request.put("email", board);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -256,7 +256,7 @@ public class MainActivity extends Activity {
 			// Creating HTTP client
 			HttpClient httpClient = new DefaultHttpClient();
 			// Creating HTTP Post
-			HttpPost httpPost = new HttpPost("http://10.255.148.178:5000");
+			HttpPost httpPost = new HttpPost("http://25.201.144.145:5000");
 			//auth.put("logonPassword", pass);
 
 			String message = request.toString();
@@ -295,58 +295,6 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 			return authCheck;
-//			try {
-//				System.out.println("test");
-//
-//				int port_number = Integer.parseInt("13375");
-//				System.out.println("test1");
-//				socket = new Socket("10.255.148.178", port_number);
-//				System.out.println("test2");
-//				dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//				System.out.println("test3");
-//				dataInputStream = new DataInputStream(socket.getInputStream());
-//				System.out.println("test4");
-//				dataOutputStream.writeChars(command);
-//				Log.i("command  --------------------------", command);
-//
-//			} catch (UnknownHostException e) {
-//				Log.i("check",command);
-//			} catch (IOException e) {
-//				go = false;
-//				MainActivity.this.runOnUiThread(new Runnable() {
-//
-//					public void run() {
-//						Toast.makeText(MainActivity.this, "Please Configure Your Server Settings!", Toast.LENGTH_LONG).show();
-//
-//					}
-//				});
-//
-//			}
-//			finally{
-//				if (socket != null){
-//					try {
-//						socket.close();
-//					} catch (IOException e) {
-//					}
-//				}
-//				if (dataOutputStream != null){
-//					try {
-//						dataOutputStream.close();
-//					} catch (IOException e) {
-//						//Toast.makeText(this, "IO Exception", Toast.LENGTH_SHORT).show();
-//						e.printStackTrace();
-//					}
-//				}
-//				if (dataInputStream != null){
-//					try {
-//						dataInputStream.close();
-//					} catch (IOException e) {
-//						//Toast.makeText(this, "IO Exception", Toast.LENGTH_SHORT).show();
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-			//return null;
 		}
 	}
 	
@@ -370,7 +318,16 @@ public class MainActivity extends Activity {
 		//				final Bitmap bmp = downloadImage(jsonObject.getString("thumbnail"));
 		//				preview.setImageBitmap(bmp);
 		Send sender = new Send();
-		sender.execute(request.toString());
+		int result = 0;
+		try {
+			result = sender.execute(request.toString()).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//sendCommand(request.toString());
 	}
 }

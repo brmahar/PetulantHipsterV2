@@ -15,9 +15,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -46,7 +49,7 @@ public class LoginFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.login_layout, container,
+        final View view = inflater.inflate(R.layout.login_layout, container,
                 false);
         login = (Button) view.findViewById(R.id.login);
         username = (EditText)view.findViewById(R.id.email);
@@ -56,20 +59,34 @@ public class LoginFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-			    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-				getUser = username.getText().toString();
-				getName = name.getText().toString();
-				savePreferences("stored", true);
-				savePreferences("User", getUser);
-				savePreferences("Name", getName);
-				Fragment fragment = new FeedFragment();
-				//asyncCheck(getUser);
-			    FragmentTransaction transaction = thisThing.getFragmentManager().beginTransaction();
-			    transaction.replace(R.id.fragment_container, fragment, "second");
-			    transaction.addToBackStack(null);
-			    transaction.commit();
-			    
+				
+				new AlertDialog.Builder(view.getContext()).setTitle("Notice")
+				.setMessage("Please use a Board named 'stuff-to-buy'")
+				.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+					    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+						getUser = username.getText().toString();
+						getName = name.getText().toString();
+						savePreferences("stored", true);
+						savePreferences("User", getUser);
+						savePreferences("Name", getName);
+						Fragment fragment = new FeedFragment();
+						//asyncCheck(getUser);
+					    FragmentTransaction transaction = thisThing.getFragmentManager().beginTransaction();
+					    transaction.replace(R.id.fragment_container, fragment, "second");
+					    transaction.addToBackStack(null);
+					    transaction.commit();
+					}
+				})
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) { 
+						// do nothing
+					}
+				})
+				.show();
+
 			}
 
 		});

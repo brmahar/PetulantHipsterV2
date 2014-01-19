@@ -58,6 +58,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+	int mCurCheckPosition = 0;
 	private NfcAdapter mNfcAdapter;
 	public static final String MIME_TEXT_PLAIN = "text/plain";
 	public static final String TAG = "NfcDemo";
@@ -165,6 +166,7 @@ public class MainActivity extends Activity {
 
 			return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
 		}
+		
 		@Override
 		protected void onPostExecute(String result) {
 			if (result != null) {
@@ -290,7 +292,7 @@ public class MainActivity extends Activity {
 				//JSONTokener tokener = new JSONTokener(builder.toString());
 				//JSONArray finalResult = new JSONArray(tokener);
 				jResponse = new JSONObject(builder.toString());
-				
+
 				// writing response to log
 				Log.d("Http Response:", response.toString());
 			} catch (ClientProtocolException e) {
@@ -308,12 +310,12 @@ public class MainActivity extends Activity {
 			return authCheck;
 		}
 	}
-	
+
 	/**
 	 * SENDS COMMAND TO SERVER
 	 */
 	protected void sendCommand(String command) {
-		
+
 	}
 
 	public void populate(String ref) {
@@ -328,7 +330,7 @@ public class MainActivity extends Activity {
 		//				ImageView preview = (ImageView)findViewById(R.id.pinPicture);
 		//				final Bitmap bmp = downloadImage(jsonObject.getString("thumbnail"));
 		//				preview.setImageBitmap(bmp);
-		
+
 		int result = 0;
 		try {
 			result = sender.execute(request.toString()).get();
@@ -342,6 +344,9 @@ public class MainActivity extends Activity {
 		//Object kickOut = jResponse.g;
 		//System.out.println(kickOut);
 		//sendCommand(request.toString());
-		
+
 	}
+
+
+
 }

@@ -191,6 +191,7 @@ public class MainActivity extends Activity {
 		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 
 		Editor edit = shared.edit();
+		edit.clear();
 		edit.putString("Results", result);
 		edit.commit();
 	}

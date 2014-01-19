@@ -14,9 +14,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
@@ -26,8 +29,12 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -77,9 +84,36 @@ public class FeedFragment extends Fragment {
 			}
 		}
 
-
+		setHasOptionsMenu(true);
 		return view;
 	}
+	
+	@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Auto-generated method stub
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_activity_actions, menu);
+    }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_logout:
+			SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+			Editor edit = shared.edit();
+			edit.clear();
+			edit.commit();
+			LoginFragment lFrag = new LoginFragment();
+			lFrag.setArguments(this.getActivity().getIntent().getExtras());
+			getFragmentManager().beginTransaction()
+			.replace(R.id.fragment_container, lFrag).commit();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public void createCard(int index) throws InterruptedException, ExecutionException{
 		title = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_title, null);
 		repins = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_descrip, null);

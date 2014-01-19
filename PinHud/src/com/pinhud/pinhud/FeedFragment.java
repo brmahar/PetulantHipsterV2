@@ -88,7 +88,7 @@ public class FeedFragment extends Fragment {
 		title.setText(desc[index]);
 		repins.setText("Repins: " + numRepin[index]);
 		getImageTask image = new getImageTask();
-		Bitmap bit = image.execute(urls[index]).get();
+		Bitmap bit = image.execute(urls[index ]).get();
 		pic.setImageBitmap(Bitmap.createScaledBitmap(bit, 450, 600, false));
 		newCard.addView(pic);
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,

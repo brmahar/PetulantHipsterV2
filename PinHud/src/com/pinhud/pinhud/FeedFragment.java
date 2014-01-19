@@ -9,6 +9,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -42,6 +46,11 @@ public class FeedFragment extends Fragment {
 	private TextView repins;
 	private ImageView pic;
 	private View view;
+	private JSONObject response;
+	int arraySize;
+	String[] desc;
+	String[] urls;
+	int[] numRepin;
 
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +58,7 @@ public class FeedFragment extends Fragment {
 		// Inflate the layout for this fragment
 		view = inflater.inflate(R.layout.feed_layout, container,
 				false);
-
+		parseJson();
 		layout = (GridLayout) view.findViewById(R.id.theLayout);
 
 		for (int i = 0; i < 3; i++){
@@ -108,6 +117,38 @@ public class FeedFragment extends Fragment {
 			
 			return bitmap;
 		}
+	}
+	
+	private void parseJson(){
+
+        MainActivity getter = new MainActivity();
+        response = getter.getResponse();
+        JSONArray results = null;
+        System.out.println(response.toString());
+        try {
+			results = (JSONArray) response.get("results");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        arraySize = results.length();
+        desc = new String[results.length()];
+        urls = new String[results.length()];
+        numRepin = new int[results.length()];
+        try {
+			System.out.println(results.get(0));
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        for(int i = 0; i < results.length(); i++){
+        	try {
+				desc[i] = (String) results.get(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
 }
 

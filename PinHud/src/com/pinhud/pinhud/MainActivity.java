@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
 	public static final String TAG = "NfcDemo";
 	private String storeResult;
 	private JSONObject request;
+	private JSONObject jResponse;
 	DataOutputStream dataOutputStream = null;
 	DataInputStream dataInputStream = null;
 	boolean go = true;
@@ -165,7 +166,20 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			if (result != null) {
-				savePreferences(result);
+				int middle = result.indexOf(",");
+				
+				String first;
+				String second;
+				first = result.substring(0, middle);
+				second = result.substring(middle+2);
+				try {
+					request.put("company_pinterest_name", first);
+					request.put("company_board_name", second);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//savePreferences(result);
 				//System.out.println("Read content: " + result);
 				//mTextView.setText("Read content: " + result);
 			}
@@ -193,9 +207,10 @@ public class MainActivity extends Activity {
 			FeedFragment fFrag = new FeedFragment();
 			fFrag.setArguments(getIntent().getExtras());
 			try {
-				request.put("name", pUser);
-				//request.put("Store", storeName);
-				request.put("email", board);
+				request.put("user_pinterest_name", pUser);
+				//request.put("StoreName", storeName);
+				//request.put("StoreBoard",storeBoard);
+				request.put("user_board_name", board);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -279,7 +294,8 @@ public class MainActivity extends Activity {
 				}
 				//JSONTokener tokener = new JSONTokener(builder.toString());
 				//JSONArray finalResult = new JSONArray(tokener);
-				request = new JSONObject(builder.toString());
+				jResponse = new JSONObject(builder.toString());
+				
 				// writing response to log
 				Log.d("Http Response:", response.toString());
 			} catch (ClientProtocolException e) {
@@ -328,6 +344,9 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//Object kickOut = jResponse.g;
+		//System.out.println(kickOut);
 		//sendCommand(request.toString());
+		
 	}
 }

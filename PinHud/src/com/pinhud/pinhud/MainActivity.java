@@ -66,6 +66,8 @@ public class MainActivity extends Activity {
 	private JSONObject jResponse;
 	DataOutputStream dataOutputStream = null;
 	DataInputStream dataInputStream = null;
+	String first;
+	String second;
 	boolean go = true;
 	Socket socket = null;
 
@@ -123,7 +125,7 @@ public class MainActivity extends Activity {
 				}
 			}
 		}
-		loadSavedPreferences();
+		//loadSavedPreferences();
 
 	}
 
@@ -167,18 +169,9 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(String result) {
 			if (result != null) {
 				int middle = result.indexOf(",");
-				
-				String first;
-				String second;
 				first = result.substring(0, middle);
 				second = result.substring(middle+2);
-				try {
-					request.put("company_pinterest_name", first);
-					request.put("company_board_name", second);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				loadSavedPreferences();
 				//savePreferences(result);
 				//System.out.println("Read content: " + result);
 				//mTextView.setText("Read content: " + result);
@@ -211,6 +204,8 @@ public class MainActivity extends Activity {
 				//request.put("StoreName", storeName);
 				//request.put("StoreBoard",storeBoard);
 				request.put("user_board_name", board);
+				request.put("company_pinterest_name", first);
+				request.put("company_board_name", second);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -322,7 +317,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void populate(String ref) {
-
+		Send sender = new Send();
 		JSONArray jsonArray = new JSONArray();  //create the array
 
 		Log.i("", request.toString()+"");
@@ -333,7 +328,7 @@ public class MainActivity extends Activity {
 		//				ImageView preview = (ImageView)findViewById(R.id.pinPicture);
 		//				final Bitmap bmp = downloadImage(jsonObject.getString("thumbnail"));
 		//				preview.setImageBitmap(bmp);
-		Send sender = new Send();
+		
 		int result = 0;
 		try {
 			result = sender.execute(request.toString()).get();

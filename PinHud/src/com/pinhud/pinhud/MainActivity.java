@@ -73,6 +73,10 @@ public class MainActivity extends Activity {
 	String second;
 	boolean go = true;
 	Socket socket = null;
+	int arraySize;
+	String[] desc;
+	String[] urls;
+	int[] numRepin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +220,11 @@ public class MainActivity extends Activity {
 			}
 			SharedPreferences remove = PreferenceManager.getDefaultSharedPreferences(this);
 			populate("test");
+			parseJson();
+			Intent i = new Intent();
+			i.putExtra("descriptor", desc);
+			i.putExtra("urls", urls);
+			i.putExtra("repins", numRepin);
 			Editor edit = remove.edit();
 			edit.putString("Store", "");
 			edit.commit();
@@ -360,5 +369,42 @@ public class MainActivity extends Activity {
 		return jResponse;
 	}
 
+	private void parseJson(){
+		JSONObject obj = new JSONObject();
+		try {
+			obj = (JSONObject) jResponse.get("results");
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+        JSONArray results = null;
+        System.out.println(jResponse.toString());
+        try {
+			results = obj.getJSONArray("image_large_urls");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        arraySize = results.length();
+        System.out.println(arraySize);
+        desc = new String[results.length()];
+        urls = new String[results.length()];
+        numRepin = new int[results.length()];
+        try {
+			System.out.println(results.get(0));
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        for(int i = 0; i < results.length(); i++){
+        	try {
+				desc[i] = (String) results.get(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+	}
 
 }

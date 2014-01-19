@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
@@ -58,10 +59,12 @@ public class FeedFragment extends Fragment {
 		// Inflate the layout for this fragment
 		view = inflater.inflate(R.layout.feed_layout, container,
 				false);
-		parseJson();
+		Intent intent = getActivity().getIntent();
+		desc = intent.getStringArrayExtra("descriptor");
+		urls = intent.getStringArrayExtra("urls");
 		layout = (GridLayout) view.findViewById(R.id.theLayout);
 
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < desc.length; i++){
 			try {
 				createCard();
 			} catch (InterruptedException e) {
@@ -81,7 +84,7 @@ public class FeedFragment extends Fragment {
 		repins = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_descrip, null);
 		pic = (ImageView)this.getActivity().getLayoutInflater().inflate(R.layout.item_image, null);
 		newCard = (RelativeLayout) View.inflate(this.getActivity(), R.layout.main_list_card, null);
-		title.setText("Best image ever!");
+		title.setText(desc[0]);
 		repins.setText("Repins: 332");
 		getImageTask image = new getImageTask();
 		Bitmap bit = image.execute("http://media-cache-ak0.pinimg.com/1200x/43/0f/bd/430fbdb32d6f0c1379e81d72262ac02f.jpg").get();
@@ -120,36 +123,5 @@ public class FeedFragment extends Fragment {
 		}
 	}
 	
-	private void parseJson(){
-
-        MainActivity getter = new MainActivity();
-        response = getter.getResponse();
-        JSONArray results = null;
-        //System.out.println(response.toString());
-        try {
-			results = (JSONArray) response.get("results");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        arraySize = results.length();
-        desc = new String[results.length()];
-        urls = new String[results.length()];
-        numRepin = new int[results.length()];
-        try {
-			System.out.println(results.get(0));
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        for(int i = 0; i < results.length(); i++){
-        	try {
-				desc[i] = (String) results.get(i);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
-	}
 }
 

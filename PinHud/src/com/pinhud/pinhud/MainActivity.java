@@ -236,10 +236,8 @@ public class MainActivity extends Activity {
 	private void loadSavedPreferences(){
 		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 		String pUser = shared.getString("User", "");
-		String storeName = shared.getString("Store", "");
 		String board = shared.getString("Name", "");
 
-		System.out.println(storeName);
 		boolean check = shared.getBoolean("stored", false);
 		if(check){
 			//asyncCheck(pUser);
@@ -280,9 +278,10 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			populate("test");
+//			populate("test");
+//			parseJson();
 			LoginFragment lFrag = new LoginFragment();
-			lFrag.setArguments(getIntent().getExtras());
+			//lFrag.setArguments(getIntent().getExtras());
 			getFragmentManager().beginTransaction()
 			.add(R.id.fragment_container, lFrag).commit();
 		}
@@ -382,7 +381,7 @@ public class MainActivity extends Activity {
 		Send sender = new Send();
 		JSONArray jsonArray = new JSONArray();  //create the array
 
-		Log.i("", request.toString()+"");
+		//Log.i("", request.toString()+"");
 
 
 		int result = 0;
@@ -407,7 +406,7 @@ public class MainActivity extends Activity {
 		return jResponse;
 	}
 
-	private void parseJson(){
+	protected void parseJson(){
 		JSONObject obj = new JSONObject();
 		try {
 			obj = (JSONObject) jResponse.get("results");
@@ -449,6 +448,30 @@ public class MainActivity extends Activity {
 			}
         }
         
+	}
+	
+	public void generateJson(String uName, String bName){
+		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+		String pUser = shared.getString("User", "");
+		String board = shared.getString("Name", "");
+		try {
+			request.put("user_pinterest_name", pUser);
+			//request.put("StoreName", storeName);
+			//request.put("StoreBoard",storeBoard);
+			request.put("user_board_name", board);
+			request.put("company_pinterest_name", uName);
+			request.put("company_board_name", bName);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		populate("test");
+		parseJson();
+		Intent i = new Intent();
+		i.putExtra("descriptor", desc);
+		i.putExtra("urls", urls);
+		i.putExtra("repins", numRepin);
 	}
 
 }

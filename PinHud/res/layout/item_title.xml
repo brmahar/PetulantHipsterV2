@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-     android:maxEms="5"
-    android:textSize="20sp" >
+     android:maxEms="6"
+    android:textSize="20sp"
+    android:paddingTop="5dp" >
 
 </TextView>

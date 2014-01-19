@@ -1,10 +1,26 @@
 package com.pinhud.pinhud;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,20 +53,61 @@ public class FeedFragment extends Fragment {
 		layout = (GridLayout) view.findViewById(R.id.theLayout);
 
 		for (int i = 0; i < 3; i++){
-			createCard();
+			try {
+				createCard();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 
 		return view;
 	}
-	public void createCard(){
+	public void createCard() throws InterruptedException, ExecutionException{
 		title = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_title, null);
 		repins = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_descrip, null);
+		pic = (ImageView)this.getActivity().getLayoutInflater().inflate(R.layout.item_image, null);
 		newCard = (RelativeLayout) View.inflate(this.getActivity(), R.layout.main_list_card, null);
-		title.setText("An Item");
-		repins.setText("This is a fucking item. Deal with it.");
+		title.setText("Best image ever!");
+		repins.setText("Repins: 332");
+		getImageTask image = new getImageTask();
+		Bitmap bit = image.execute("http://media-cache-ak0.pinimg.com/1200x/43/0f/bd/430fbdb32d6f0c1379e81d72262ac02f.jpg").get();
+		pic.setImageBitmap(Bitmap.createScaledBitmap(bit, 450, 600, false));
+		newCard.addView(pic);
+		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+		        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		p.addRule(RelativeLayout.BELOW, R.id.item_image);
+		title.setLayoutParams(p);
 		newCard.addView(title);
+		RelativeLayout.LayoutParams o = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+		        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		o.addRule(RelativeLayout.BELOW, R.id.item_title);
+		repins.setLayoutParams(o);
 		newCard.addView(repins);
 		layout.addView(newCard);
 	}
+
+	private class getImageTask extends AsyncTask<String, Void, Bitmap> {
+		@Override
+		protected Bitmap doInBackground(String... params) {
+			String url = params[0];
+			Bitmap bitmap = null;
+			try {
+				  bitmap = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
+				} catch (MalformedURLException e) {
+				  e.printStackTrace();
+				} catch (IOException e) {
+				  e.printStackTrace();
+				}
+			
+			return bitmap;
+		}
+	}
 }
+

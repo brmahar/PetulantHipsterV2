@@ -55,6 +55,9 @@ public class LoginFragment extends Fragment {
         username = (EditText)view.findViewById(R.id.email);
         name = (EditText)view.findViewById(R.id.password);
         
+        MainActivity getter = new MainActivity();
+        JSONObject response = getter.getResponse();
+        
         login.setOnClickListener(new OnClickListener(){
 
 			@Override

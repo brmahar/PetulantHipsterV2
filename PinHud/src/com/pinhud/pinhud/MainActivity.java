@@ -305,23 +305,23 @@ public class MainActivity extends Activity {
 				for (String line = null; (line = reader.readLine()) != null;) {
 					builder.append(line).append("\n");
 				}
-				JSONTokener tokener = new JSONTokener(builder.toString());
-				JSONArray finalResult = new JSONArray("description");
+//				JSONTokener tokener = new JSONTokener(builder.toString());
+//				JSONArray finalResult = new JSONArray("description");
 				
-				Toast.makeText(getApplicationContext(), 
-                        first, Toast.LENGTH_LONG).show();
 				jResponse = new JSONObject(builder.toString());
-
 				// writing response to log
 				Log.d("Http Response:", response.toString());
 			} catch (ClientProtocolException e) {
 				// writing exception to log
+				System.out.println("Test");
 				e.printStackTrace();
 			} catch (IOException e) {
+				System.out.println("TEST@");
 				// writing exception to log
 				e.printStackTrace();
 
 			} catch (JSONException e) {
+				System.out.println("kl;asdjg");
 				authCheck = 1;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -331,25 +331,12 @@ public class MainActivity extends Activity {
 
 	}
 
-	/**
-	 * SENDS COMMAND TO SERVER
-	 */
-	protected void sendCommand(String command) {
-
-	}
-
 	public void populate(String ref) {
 		Send sender = new Send();
 		JSONArray jsonArray = new JSONArray();  //create the array
 
 		Log.i("", request.toString()+"");
 
-
-
-		//				//create image
-		//				ImageView preview = (ImageView)findViewById(R.id.pinPicture);
-		//				final Bitmap bmp = downloadImage(jsonObject.getString("thumbnail"));
-		//				preview.setImageBitmap(bmp);
 
 		int result = 0;
 		try {
@@ -364,15 +351,14 @@ public class MainActivity extends Activity {
 
 		if(result == 0){
 			System.out.println(result);
-			try {
-				Object description = jResponse.get("description");
-				System.out.println(description.toString());
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			//Object description = jResponse.get("description");
+			System.out.println(jResponse.toString());
 		}
 	}
 
+	public JSONObject getResponse(){
+		return jResponse;
+	}
 
 
 }

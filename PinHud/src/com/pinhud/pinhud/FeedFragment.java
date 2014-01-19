@@ -1,7 +1,6 @@
 package com.pinhud.pinhud;
 
 import java.util.Locale;
-
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -24,7 +23,7 @@ public class FeedFragment extends Fragment {
 	private GridLayout layout;
 	private RelativeLayout newCard;
 	private TextView title;
-	private TextView info;
+	private TextView repins;
 	private ImageView pic;
 	private View view;
 
@@ -35,8 +34,6 @@ public class FeedFragment extends Fragment {
 		view = inflater.inflate(R.layout.feed_layout, container,
 				false);
 
-		title = (TextView) view.findViewById(R.id.pinTitle);
-		info = (TextView) view.findViewById(R.id.pinDescription);
 		layout = (GridLayout) view.findViewById(R.id.theLayout);
 
 		for (int i = 0; i < 3; i++){
@@ -47,10 +44,13 @@ public class FeedFragment extends Fragment {
 		return view;
 	}
 	public void createCard(){
-
+		title = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_title, null);
+		repins = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_descrip, null);
 		newCard = (RelativeLayout) View.inflate(this.getActivity(), R.layout.main_list_card, null);
 		title.setText("An Item");
-		info.setText("This is a fucking item. Deal with it.");
+		repins.setText("This is a fucking item. Deal with it.");
+		newCard.addView(title);
+		newCard.addView(repins);
 		layout.addView(newCard);
 	}
 }

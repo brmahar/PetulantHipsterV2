@@ -5,27 +5,5 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content" 
     android:layout_weight="0.5">
-    
-     <ImageView
-        android:id="@+id/pinPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/custombutton" /> 
-
-    <TextView
-        android:id="@+id/pinTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pinPicture"
-        android:layout_centerHorizontal="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-   <TextView
-        android:id="@+id/pinDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pinTitle"
-        android:layout_centerHorizontal="true" /> 
-    
 
 </RelativeLayout>

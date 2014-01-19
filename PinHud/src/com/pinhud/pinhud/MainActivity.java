@@ -139,10 +139,12 @@ public class MainActivity extends Activity {
 				edit.putString("Store", "");
 				edit.commit();
 				getFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, fFrag).commit();
+				.replace(R.id.fragment_container, fFrag).commit();
+				return;
 			}
-			handleFragments(getIntent());
+			
 		}
+		handleFragments(getIntent());
 	}
 
 	private void handleFragments(Intent intent) {
@@ -398,7 +400,7 @@ public class MainActivity extends Activity {
 		if(result == 0){
 			System.out.println(result);
 			//Object description = jResponse.get("description");
-			System.out.println(jResponse.toString());
+			//System.out.println(jResponse.toString());
 		}
 	}
 

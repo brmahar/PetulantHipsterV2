@@ -27,6 +27,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -65,6 +66,7 @@ public class MainActivity extends Activity {
 	private String storeResult;
 	private JSONObject request;
 	private JSONObject jResponse;
+	private String storage;
 	DataOutputStream dataOutputStream = null;
 	DataInputStream dataInputStream = null;
 	String first;
@@ -166,7 +168,7 @@ public class MainActivity extends Activity {
 
 			return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			if (result != null) {
@@ -183,7 +185,7 @@ public class MainActivity extends Activity {
 
 	private void savePreferences(String result){
 		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		Editor edit = shared.edit();
 		edit.putString("Results", result);
 		edit.commit();
@@ -272,11 +274,13 @@ public class MainActivity extends Activity {
 	}
 
 	private class Send extends AsyncTask<String, Void, Integer> {
+
+
 		@Override
 		protected Integer doInBackground(String... params) {
 			//String command = params[0];
 			String user = params[0];
-			int authCheck = 0;
+			Integer authCheck = 0;
 			// Creating HTTP client
 			HttpClient httpClient = new DefaultHttpClient();
 			// Creating HTTP Post
@@ -301,8 +305,11 @@ public class MainActivity extends Activity {
 				for (String line = null; (line = reader.readLine()) != null;) {
 					builder.append(line).append("\n");
 				}
-				//JSONTokener tokener = new JSONTokener(builder.toString());
-				//JSONArray finalResult = new JSONArray(tokener);
+				JSONTokener tokener = new JSONTokener(builder.toString());
+				JSONArray finalResult = new JSONArray("description");
+				
+				Toast.makeText(getApplicationContext(), 
+                        first, Toast.LENGTH_LONG).show();
 				jResponse = new JSONObject(builder.toString());
 
 				// writing response to log
@@ -321,6 +328,7 @@ public class MainActivity extends Activity {
 			}
 			return authCheck;
 		}
+
 	}
 
 	/**
@@ -353,10 +361,16 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Object kickOut = jResponse.g;
-		//System.out.println(kickOut);
-		//sendCommand(request.toString());
 
+		if(result == 0){
+			System.out.println(result);
+			try {
+				Object description = jResponse.get("description");
+				System.out.println(description.toString());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 

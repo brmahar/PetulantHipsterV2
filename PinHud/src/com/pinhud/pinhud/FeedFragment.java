@@ -18,6 +18,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
@@ -51,7 +52,6 @@ public class FeedFragment extends Fragment {
 	String[] desc;
 	String[] urls;
 	int[] numRepin;
-
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class FeedFragment extends Fragment {
 		        ViewGroup.LayoutParams.WRAP_CONTENT);
 
 		o.addRule(RelativeLayout.BELOW, R.id.item_title);
+		o.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		repins.setLayoutParams(o);
 		newCard.addView(repins);
 		layout.addView(newCard);

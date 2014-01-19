@@ -34,7 +34,7 @@ public final class R {
         public static final int target_list_logo=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0010;
+        public static final int action_settings=0x7f0b0011;
         public static final int card_rel=0x7f0b000b;
         public static final int email=0x7f0b0007;
         public static final int fragment_container=0x7f0b0000;
@@ -50,6 +50,7 @@ public final class R {
         public static final int pinTitle=0x7f0b000e;
         public static final int progress=0x7f0b0006;
         public static final int scrollView=0x7f0b0001;
+        public static final int sep=0x7f0b0010;
         public static final int theLayout=0x7f0b0002;
     }
     public static final class integer {
@@ -65,6 +66,7 @@ public final class R {
         public static final int login_layout=0x7f030006;
         public static final int main_list_card=0x7f030007;
         public static final int pin_card=0x7f030008;
+        public static final int separator=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

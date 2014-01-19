@@ -125,7 +125,7 @@ public class FeedFragment extends Fragment {
         MainActivity getter = new MainActivity();
         response = getter.getResponse();
         JSONArray results = null;
-        System.out.println(response.toString());
+        //System.out.println(response.toString());
         try {
 			results = (JSONArray) response.get("results");
 		} catch (JSONException e) {

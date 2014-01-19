@@ -183,9 +183,9 @@ public class MainActivity extends Activity {
 
 	private void savePreferences(String result){
 		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-
+		
 		Editor edit = shared.edit();
-		edit.putString("Store", result);
+		edit.putString("Results", result);
 		edit.commit();
 	}
 
@@ -220,6 +220,18 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 			.add(R.id.fragment_container, fFrag).commit();
 		}else{
+			try {
+				request.put("user_pinterest_name", pUser);
+				//request.put("StoreName", storeName);
+				//request.put("StoreBoard",storeBoard);
+				request.put("user_board_name", board);
+				request.put("company_pinterest_name", first);
+				request.put("company_board_name", second);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			populate("test");
 			LoginFragment lFrag = new LoginFragment();
 			lFrag.setArguments(getIntent().getExtras());
 			getFragmentManager().beginTransaction()

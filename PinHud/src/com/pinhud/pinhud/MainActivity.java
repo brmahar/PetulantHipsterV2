@@ -378,9 +378,13 @@ public class MainActivity extends Activity {
 			e2.printStackTrace();
 		}
         JSONArray results = null;
+        JSONArray results1 = null;
+        JSONArray results2 = null;
         System.out.println(jResponse.toString());
         try {
 			results = obj.getJSONArray("image_large_urls");
+			results1 = obj.getJSONArray("descriptions");
+			results2 = obj.getJSONArray("repins");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -398,7 +402,9 @@ public class MainActivity extends Activity {
 		}
         for(int i = 0; i < results.length(); i++){
         	try {
-				desc[i] = (String) results.get(i);
+				urls[i] = (String) results.get(i);
+				numRepin[i] =  (Integer) results2.get(i);
+				desc[i] = (String) results1.get(i) ;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

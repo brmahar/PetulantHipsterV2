@@ -60,13 +60,14 @@ public class FeedFragment extends Fragment {
 		view = inflater.inflate(R.layout.feed_layout, container,
 				false);
 		Intent intent = getActivity().getIntent();
-		desc = intent.getStringArrayExtra("descriptor");
-		urls = intent.getStringArrayExtra("urls");
+		//desc = intent.getStringArrayExtra("descriptor");
+		urls = ((MainActivity)getActivity()).urls;
 		layout = (GridLayout) view.findViewById(R.id.theLayout);
-
+		desc = ((MainActivity)getActivity()).desc;
+		numRepin = ((MainActivity)getActivity()).numRepin;
 		for (int i = 0; i < desc.length; i++){
 			try {
-				createCard();
+				createCard(i);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -79,15 +80,15 @@ public class FeedFragment extends Fragment {
 
 		return view;
 	}
-	public void createCard() throws InterruptedException, ExecutionException{
+	public void createCard(int index) throws InterruptedException, ExecutionException{
 		title = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_title, null);
 		repins = (TextView)this.getActivity().getLayoutInflater().inflate(R.layout.item_descrip, null);
 		pic = (ImageView)this.getActivity().getLayoutInflater().inflate(R.layout.item_image, null);
 		newCard = (RelativeLayout) View.inflate(this.getActivity(), R.layout.main_list_card, null);
-		title.setText(desc[0]);
-		repins.setText("Repins: 332");
+		title.setText(desc[index]);
+		repins.setText("Repins: " + numRepin[index]);
 		getImageTask image = new getImageTask();
-		Bitmap bit = image.execute("http://media-cache-ak0.pinimg.com/1200x/43/0f/bd/430fbdb32d6f0c1379e81d72262ac02f.jpg").get();
+		Bitmap bit = image.execute(urls[index]).get();
 		pic.setImageBitmap(Bitmap.createScaledBitmap(bit, 450, 600, false));
 		newCard.addView(pic);
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,

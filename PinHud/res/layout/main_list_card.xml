@@ -6,14 +6,11 @@
     android:layout_height="wrap_content" 
     android:layout_weight="0.5">
     
-    <ImageView
+     <ImageView
         android:id="@+id/pinPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/custombutton" />
+        android:src="@drawable/custombutton" /> 
 
     <TextView
         android:id="@+id/pinTitle"
@@ -23,12 +20,12 @@
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
+   <TextView
         android:id="@+id/pinDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pinTitle"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true" /> 
     
 
 </RelativeLayout>

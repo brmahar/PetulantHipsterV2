@@ -106,6 +106,41 @@ public class MainActivity extends Activity {
 			.show();
 
 		}else{
+			SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+			String pUser = shared.getString("User", "");
+			String storeName = shared.getString("StoreName", "");
+			String storeBoard = shared.getString("StoreBoard", "");
+			String board = shared.getString("Name", "");
+
+			System.out.println(storeName);
+			boolean check = shared.getBoolean("stored", false);
+			if(storeName != null && storeBoard != null && check){
+				FeedFragment fFrag = new FeedFragment();
+				fFrag.setArguments(getIntent().getExtras());
+				try {
+					request.put("user_pinterest_name", pUser);
+					//request.put("StoreName", storeName);
+					//request.put("StoreBoard",storeBoard);
+					request.put("user_board_name", board);
+					request.put("company_pinterest_name", storeName);
+					request.put("company_board_name", storeBoard);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SharedPreferences remove = PreferenceManager.getDefaultSharedPreferences(this);
+				populate("test");
+				parseJson();
+				Intent i = new Intent();
+				i.putExtra("descriptor", desc);
+				i.putExtra("urls", urls);
+				i.putExtra("repins", numRepin);
+				Editor edit = remove.edit();
+				edit.putString("Store", "");
+				edit.commit();
+				getFragmentManager().beginTransaction()
+				.add(R.id.fragment_container, fFrag).commit();
+			}
 			handleFragments(getIntent());
 		}
 	}
@@ -179,6 +214,7 @@ public class MainActivity extends Activity {
 				int middle = result.indexOf(",");
 				first = result.substring(0, middle);
 				second = result.substring(middle+2);
+				savePreferences(first, second);
 				loadSavedPreferences();
 				//savePreferences(result);
 				//System.out.println("Read content: " + result);
@@ -187,12 +223,13 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	private void savePreferences(String result){
+	private void savePreferences(String store, String storeB){
 		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 
 		Editor edit = shared.edit();
 		edit.clear();
-		edit.putString("Results", result);
+		edit.putString("StoreName", store);
+		edit.putString("StoreBoard", storeB);
 		edit.commit();
 	}
 
